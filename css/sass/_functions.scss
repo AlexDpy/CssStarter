@@ -1,0 +1,15 @@
+$functions-rem-base: 16px !default;
+
+$functions-rem-browser: 16px;
+
+@function trimUnit($value) {
+    @return $value / ($value * 0 + 1);
+}
+
+@function pxToRem($value) {
+    @return trimUnit($value) / trimUnit($functions-rem-browser) * 1rem;
+}
+
+@function ratioToRem($value) {
+    @return $value * trimUnit($functions-rem-base) / trimUnit($functions-rem-browser) * 1rem;
+}

@@ -1,0 +1,84 @@
+$grid-columns: 12 !default;
+$grid-gutter: pxToRem(20px) !default;
+$grid-is-responsive: true !default;
+$grid-media-screens: m 640px, l 1024px !default; // only when $grid-is-responsive == true
+$grid-container-width: 1120px !default;
+$grid-push-pull-is-active: true !default;
+$grid-offset-is-active: true !default;
+
+$grid-gutter: ratioToRem(1.25);
+
+.container {
+    @if true != $grid-is-responsive {
+        width: $grid-container-width;
+    }
+    max-width: $grid-container-width;
+    margin: 0 auto;
+}
+
+.row {
+    @include clearfix();
+    .row {
+        margin: 0 $grid-gutter * -0.5;
+    }
+}
+
+%col {
+    @include box-sizing(border-box);
+    position: relative;
+    float: left;
+    padding: 0 $grid-gutter * 0.5;
+
+    background-color: rgba(#000, 0.2); //@TODO à supprimer
+}
+
+@for $i from 1 through $grid-columns {
+    .col-#{$i} {
+        @extend %col;
+    }
+    @if true == $grid-is-responsive {
+        @each $screen in $grid-media-screens {
+            .col-#{nth($screen, 1)}-#{$i} {
+                @extend %col;
+            }
+        }
+    }
+}
+
+@mixin generateColumns($suffix: '') {
+    .col#{$suffix}-center {
+        float: none;
+        margin: 0 auto;
+    }
+    @for $i from 0 through $grid-columns {
+        @if $i > 0 {
+            .col#{$suffix}-#{$i} {
+                width: $i / $grid-columns * 100%;
+            }
+        }
+        @if true == $grid-push-pull-is-active {
+            .col#{$suffix}-push-#{$i} {
+                left: $i / $grid-columns * 100%;
+            }
+            .col#{$suffix}-pull-#{$i} {
+                left: $i / $grid-columns * -100%;
+            }
+        }
+        @if true == $grid-offset-is-active {
+            .col#{$suffix}-offset-#{$i} {
+                margin-left: $i / $grid-columns * 100%;
+            }
+        }
+    }
+}
+
+$global-unit-size: 16px !default;
+
+@include generateColumns();
+@if true == $grid-is-responsive {
+    @each $screen in $grid-media-screens {
+        @media only screen and (min-width: pxToRem(nth($screen, 2))) {
+            @include generateColumns(#{'-'}nth($screen, 1));
+        }
+    }
+}
