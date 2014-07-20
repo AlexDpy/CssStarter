@@ -13,3 +13,28 @@ $functions-rem-browser: 16px;
 @function ratioToRem($value) {
     @return trimUnit($value) * trimUnit($functions-rem-base) / trimUnit($functions-rem-browser) * 1rem;
 }
+
+@function getRemFontSize($value) {
+    @if unit($value) == 'px' {
+        @return pxToRem($value);
+    } @else if unit($value) == 'rem' {
+        @return ratioToRem($value);
+    } @else {
+        @warn 'Wrong unit for a $type-*-font-size variable : "px" or "rem" expected';
+        @return $value;
+    }
+}
+
+@function getRemLineHeight($value, $rem-font-size: 1rem) {
+
+    @if unit($value) == 'px' {
+        @return pxToRem($value);
+    } @else if unit($value) == 'rem' {
+        @return ratioToRem($value);
+    } @else if unit($value) == '' {
+        @return $value * $rem-font-size;
+    } @else {
+        @warn 'Wrong unit for a $type-*-line-height variable : "px", "rem" or "" expected';
+        @return $value;
+    }
+}

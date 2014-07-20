@@ -1,6 +1,7 @@
 $type-base-color: black !default;
 $type-base-font-size: $functions-rem-base;
 $type-base-font-family: sans-serif !default;
+$type-base-line-height: 1.5 !default;
 
 /* ---------------------------------------- *\
     Headings
@@ -43,6 +44,19 @@ $type-h6-font-size: 0.85rem !default;
 
 $type-headings-font-size: $type-h1-font-size $type-h2-font-size $type-h3-font-size $type-h4-font-size $type-h5-font-size $type-h6-font-size;
 
+// line-height
+
+$type-heading-line-height: $type-base-line-height !default;
+
+$type-h1-line-height: $type-heading-line-height !default;
+$type-h2-line-height: $type-heading-line-height !default;
+$type-h3-line-height: $type-heading-line-height !default;
+$type-h4-line-height: $type-heading-line-height !default;
+$type-h5-line-height: $type-heading-line-height !default;
+$type-h6-line-height: $type-heading-line-height !default;
+
+$type-headings-line-height: $type-h1-line-height $type-h2-line-height $type-h3-line-height $type-h4-line-height $type-h5-line-height $type-h6-line-height;
+
 // font-weight
 
 $type-heading-font-weight: bold !default;
@@ -69,29 +83,94 @@ $type-h6-font-style: $type-heading-font-style !default;
 
 $type-headings-font-style: $type-h1-font-style $type-h2-font-style $type-h3-font-style $type-h4-font-style $type-h5-font-style $type-h6-font-style;
 
+/* ---------------------------------------- *\
+    Paragraphs
+\* ---------------------------------------- */
+
+$type-p-margin-top-rem: getRemLineHeight($type-base-line-height, getRemFontSize($type-base-font-size)) * 0.5 !default;
+$type-p-margin-bottom-rem: getRemLineHeight($type-base-line-height, getRemFontSize($type-base-font-size)) * 0.5 !default;
+
+/* ---------------------------------------- *\
+    Links
+\* ---------------------------------------- */
+
+$type-a-color: inherit !default;
+$type-a-color-link: $type-a-color !default;
+$type-a-color-visited: $type-a-color !default;
+$type-a-color-hover: $type-a-color !default;
+$type-a-color-active: $type-a-color !default;
+
+$type-a-text-decoration: none !default;
+$type-a-text-decoration-link: $type-a-text-decoration !default;
+$type-a-text-decoration-visited: $type-a-text-decoration !default;
+$type-a-text-decoration-hover: $type-a-text-decoration !default;
+$type-a-text-decoration-active: $type-a-text-decoration !default;
+
+/* ---------------------------------------- *\
+    Styled Tags
+\* ---------------------------------------- */
+
+$type-strong-font-weight: bold !default;
+$type-em-font-style: italic !default;
+$type-code-font-family: monospace;
+$type-code-font-size: getRemFontSize($type-base-font-size) / 1.33 !default;
+$type-code-line-height: getRemLineHeight($type-base-line-height, getRemFontSize($type-code-font-size)) / 1.33 !default;
+
 body, p {
     color: $type-base-color;
-    font-size: $type-base-font-size;
     font-family: $type-base-font-family;
+    font-size: getRemFontSize($type-base-font-size);
+    line-height: getRemLineHeight($type-base-line-height, getRemFontSize($type-base-font-size));
+}
+
+p {
+    margin-top: $type-p-margin-top-rem;
+    margin-bottom: $type-p-margin-bottom-rem;
 }
 
 @for $i from 1 through 6 {
     h#{$i} {
         color: nth($type-headings-color, $i);
-
         font-family: nth($type-headings-font-family, $i);
-
-        $thfs: nth($type-headings-font-size, $i);
-        @if unit($thfs) == 'px' {
-            font-size: pxToRem($thfs);
-        } @else if unit($thfs) == 'rem' {
-            font-size: ratioToRem($thfs);
-        } @else {
-            @warn 'Wrong unit for a $type-h*-font-size variable : px or rem expected';
-        }
-
+        font-size: getRemFontSize(nth($type-headings-font-size, $i));
+        line-height: getRemLineHeight(nth($type-headings-line-height, $i), getRemFontSize(nth($type-headings-font-size, $i)));
         font-weight: nth($type-headings-font-weight, $i);
-
         font-style: nth($type-headings-font-style, $i);
     }
+}
+
+a {
+    color: $type-a-color;
+    text-decoration: $type-a-text-decoration;
+    &:link {
+        color: $type-a-color-link;
+        text-decoration: $type-a-text-decoration-link;
+    }
+    &:visited {
+        color: $type-a-color-visited;
+        text-decoration: $type-a-text-decoration-visited;
+    }
+    &:hover {
+        color: $type-a-color-hover;
+        text-decoration: $type-a-text-decoration-hover;
+    }
+    &:active, &.active {
+        color: $type-a-color-active;
+        text-decoration: $type-a-text-decoration-active;
+    }
+}
+
+b, strong {
+    font-weight: $type-strong-font-weight;
+}
+
+em {
+    font-style: $type-em-font-style;
+}
+
+code, samp, kbd {
+    font-family: $type-code-font-family;
+    font-size: $type-code-font-size;
+    line-height: $type-code-line-height;
+    @warn $type-code-line-height;
 }
