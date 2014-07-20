@@ -1,0 +1,97 @@
+$type-base-color: black !default;
+$type-base-font-size: $functions-rem-base;
+$type-base-font-family: sans-serif !default;
+
+/* ---------------------------------------- *\
+    Headings
+\* ---------------------------------------- */
+
+// color
+
+$type-heading-color: $type-base-color !default;
+
+$type-h1-color: $type-heading-color !default;
+$type-h2-color: $type-heading-color !default;
+$type-h3-color: $type-heading-color !default;
+$type-h4-color: $type-heading-color !default;
+$type-h5-color: $type-heading-color !default;
+$type-h6-color: $type-heading-color !default;
+
+$type-headings-color: $type-h1-color $type-h2-color $type-h3-color $type-h4-color $type-h5-color $type-h6-color;
+
+// font-family
+
+$type-heading-font-family: $type-base-font-family !default;
+
+$type-h1-font-family: $type-heading-font-family !default;
+$type-h2-font-family: $type-heading-font-family !default;
+$type-h3-font-family: $type-heading-font-family !default;
+$type-h4-font-family: $type-heading-font-family !default;
+$type-h5-font-family: $type-heading-font-family !default;
+$type-h6-font-family: $type-heading-font-family !default;
+
+$type-headings-font-family: $type-h1-font-family $type-h2-font-family $type-h3-font-family $type-h4-font-family $type-h5-font-family $type-h6-font-family;
+
+// font-size
+
+$type-h1-font-size: 2.6rem !default;
+$type-h2-font-size: 2.15rem !default;
+$type-h3-font-size: 1.7rem !default;
+$type-h4-font-size: 1.25rem !default;
+$type-h5-font-size: 1rem !default;
+$type-h6-font-size: 0.85rem !default;
+
+$type-headings-font-size: $type-h1-font-size $type-h2-font-size $type-h3-font-size $type-h4-font-size $type-h5-font-size $type-h6-font-size;
+
+// font-weight
+
+$type-heading-font-weight: bold !default;
+
+$type-h1-font-weight: $type-heading-font-weight !default;
+$type-h2-font-weight: $type-heading-font-weight !default;
+$type-h3-font-weight: $type-heading-font-weight !default;
+$type-h4-font-weight: $type-heading-font-weight !default;
+$type-h5-font-weight: $type-heading-font-weight !default;
+$type-h6-font-weight: $type-heading-font-weight !default;
+
+$type-headings-font-weight: $type-h1-font-weight $type-h2-font-weight $type-h3-font-weight $type-h4-font-weight $type-h5-font-weight $type-h6-font-weight;
+
+// font-style
+
+$type-heading-font-style: normal !default;
+
+$type-h1-font-style: $type-heading-font-style !default;
+$type-h2-font-style: $type-heading-font-style !default;
+$type-h3-font-style: $type-heading-font-style !default;
+$type-h4-font-style: $type-heading-font-style !default;
+$type-h5-font-style: $type-heading-font-style !default;
+$type-h6-font-style: $type-heading-font-style !default;
+
+$type-headings-font-style: $type-h1-font-style $type-h2-font-style $type-h3-font-style $type-h4-font-style $type-h5-font-style $type-h6-font-style;
+
+body, p {
+    color: $type-base-color;
+    font-size: $type-base-font-size;
+    font-family: $type-base-font-family;
+}
+
+@for $i from 1 through 6 {
+    h#{$i} {
+        color: nth($type-headings-color, $i);
+
+        font-family: nth($type-headings-font-family, $i);
+
+        $thfs: nth($type-headings-font-size, $i);
+        @if unit($thfs) == 'px' {
+            font-size: pxToRem($thfs);
+        } @else if unit($thfs) == 'rem' {
+            font-size: ratioToRem($thfs);
+        } @else {
+            @warn 'Wrong unit for a $type-h*-font-size variable : px or rem expected';
+        }
+
+        font-weight: nth($type-headings-font-weight, $i);
+
+        font-style: nth($type-headings-font-style, $i);
+    }
+}
