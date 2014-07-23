@@ -1,40 +1,33 @@
-$functions-rem-base: 16px !default;
+$functions-base-px-font-size: 16px !default;
 
-$functions-rem-browser: 16px;
+$functions-browser-px-font-size: 16px;
 
-@function trimUnit($value) {
+@function trimUnit($value)
+{
     @return $value / ($value * 0 + 1);
 }
 
-@function pxToRem($value) {
-    @return trimUnit($value) / trimUnit($functions-rem-browser) * 1rem;
+@function pxToRem($value)
+{
+    @return trimUnit($value) / trimUnit($functions-browser-px-font-size) * 1rem;
 }
 
-@function ratioToRem($value) {
-    @return trimUnit($value) * trimUnit($functions-rem-base) / trimUnit($functions-rem-browser) * 1rem;
-}
-
-@function getRemFontSize($value) {
-    @if unit($value) == 'px' {
-        @return pxToRem($value);
-    } @else if unit($value) == 'rem' {
-        @return ratioToRem($value);
-    } @else {
-        @warn 'Wrong unit for a $type-*-font-size variable : "px" or "rem" expected';
+@function getRem($value) {
+    @if unit($value) == 'rem' {
         @return $value;
-    }
-}
-
-@function getRemLineHeight($value, $rem-font-size: 1rem) {
-
-    @if unit($value) == 'px' {
-        @return pxToRem($value);
-    } @else if unit($value) == 'rem' {
-        @return ratioToRem($value);
+    } @else if unit($value) == 'px' {
+        @return trimUnit($value) / trimUnit($functions-browser-px-font-size) * 1rem;
     } @else if unit($value) == '' {
-        @return $value * $rem-font-size;
-    } @else {
-        @warn 'Wrong unit for a $type-*-line-height variable : "px", "rem" or "" expected';
-        @return $value;
+        @return trimUnit($value) * trimUnit($functions-base-px-font-size) / trimUnit($functions-browser-px-font-size) * 1rem;
+    } @else if unit($value) == '%' {
+        @return trimUnit($value) / 100 * trimUnit($functions-base-px-font-size) / trimUnit($functions-browser-px-font-size) * 1rem;
     }
 }
+
+//@function getPxFromRem($remValue) {
+//    @if unit($remValue) != 'rem' {
+//        @warn 'Wrong unit for $remValue in function "getPxToRem($remValue)" : "rem" expected';
+//        @return $remValue;
+//    }
+//    @return trimUnit($remValue) * $functions-browser-px-font-size;
+//}

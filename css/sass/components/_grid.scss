@@ -1,12 +1,10 @@
 $grid-columns: 12 !default;
-$grid-gutter: pxToRem(20px) !default;
+$grid-gutter: 20px !default;
 $grid-is-responsive: true !default;
 $grid-media-screens: m 640px, l 1024px !default; // only when $grid-is-responsive == true
 $grid-container-width: 1120px !default;
 $grid-push-pull-is-active: true !default;
 $grid-offset-is-active: true !default;
-
-$grid-gutter: ratioToRem(1.25);
 
 .container {
     @if true != $grid-is-responsive {
@@ -72,12 +70,10 @@ $grid-gutter: ratioToRem(1.25);
     }
 }
 
-$global-unit-size: 16px !default;
-
 @include generateColumns();
 @if true == $grid-is-responsive {
     @each $screen in $grid-media-screens {
-        @media only screen and (min-width: pxToRem(nth($screen, 2))) {
+        @media only screen and (min-width: getRem(nth($screen, 2))) {
             @include generateColumns(#{'-'}nth($screen, 1));
         }
     }
