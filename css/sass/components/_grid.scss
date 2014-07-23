@@ -73,7 +73,7 @@ $grid-offset-is-active: true !default;
 @include generateColumns();
 @if true == $grid-is-responsive {
     @each $screen in $grid-media-screens {
-        @media only screen and (min-width: getRem(nth($screen, 2))) {
+        @media only screen and (min-width: getSize(nth($screen, 2))) {
             @include generateColumns(#{'-'}nth($screen, 1));
         }
     }

@@ -1,4 +1,6 @@
-$functions-base-px-font-size: 16px !default;
+$functions-base-px-font-size: 20px !default;
+
+$functions-base-unit: 'rem';
 
 $functions-browser-px-font-size: 16px;
 
@@ -12,16 +14,26 @@ $functions-browser-px-font-size: 16px;
     @return trimUnit($value) / trimUnit($functions-browser-px-font-size) * 1rem;
 }
 
-@function getRem($value) {
-    @if unit($value) == 'rem' {
-        @return $value;
-    } @else if unit($value) == 'px' {
-        @return trimUnit($value) / trimUnit($functions-browser-px-font-size) * 1rem;
-    } @else if unit($value) == '' {
-        @return trimUnit($value) * trimUnit($functions-base-px-font-size) / trimUnit($functions-browser-px-font-size) * 1rem;
-    } @else if unit($value) == '%' {
-        @return trimUnit($value) / 100 * trimUnit($functions-base-px-font-size) / trimUnit($functions-browser-px-font-size) * 1rem;
+@function getSize($value, $unit: $functions-base-unit) {
+    @if $unit == 'rem' {
+        @if unit($value) == 'rem' {
+            @return $value;
+        } @else if unit($value) == 'px' {
+            @return trimUnit($value) / trimUnit($functions-base-px-font-size) * 1rem;
+        } @else if unit($value) == '%' {
+            @return trimUnit($value) / 100 * 1rem;
+        }
+    } @else if $unit == 'px' {
+        @if unit($value) == 'rem' {
+            @return trimUnit($value) * trimUnit($functions-base-px-font-size) * 1px;
+        } @else if unit($value) == 'px' {
+            @return $value;
+        } @else if unit($value) == '%' {
+            @return trimUnit($value) / 100 * trimUnit($functions-base-px-font-size) * 1px;
+        }
     }
+
+    @return $value;
 }
 
 //@function getPxFromRem($remValue) {
