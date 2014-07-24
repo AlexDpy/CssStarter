@@ -35,9 +35,9 @@ $type-headings-font-family: $type-h1-font-family $type-h2-font-family $type-h3-f
 
 // font-size
 
-$type-h1-font-size: 52px !default;
-$type-h2-font-size: 2.6rem !default;
-$type-h3-font-size: 260% !default;
+$type-h1-font-size: 2.6rem !default;
+$type-h2-font-size: 215% !default;
+$type-h3-font-size: 1.7rem !default;
 $type-h4-font-size: 1.25rem !default;
 $type-h5-font-size: 1rem !default;
 $type-h6-font-size: 0.85rem !default;
@@ -110,25 +110,30 @@ $type-a-text-decoration-hover: $type-a-text-decoration !default;
 $type-a-text-decoration-active: $type-a-text-decoration !default;
 
 /* ---------------------------------------- *\
-    <strong> <b> <em> <code> <samp> <kbd>
+    <strong> <b> <em> <code> <samp> <kbd> <var> <mark>
 \* ---------------------------------------- */
 
 $type-strong-font-weight: bold !default;
 $type-em-font-style: italic !default;
 $type-code-font-family: monospace !default;
+$type-var-font-style: italic !default;
+$type-mark-background-color: yellow !default;
+
+/* ---------------------------------------- *\
+    <q>
+\* ---------------------------------------- */
+
+$type-q-color: lighten($type-base-color, 50%) !default; //@TODO automatiser lehgtn ou darken en fonction de $type-base-color
+$type-q-font-family: inherit !default;
 
 /* ---------------------------------------- *\
     Style
 \* ---------------------------------------- */
 
-@function getRootFontSize($value) {
-    @return getSize(trimUnit($value) / trimUnit($functions-browser-px-font-size) * 1rem);
-}
-
 html, body {
     color: $type-base-color;
     font-family: $type-base-font-family;
-    font-size: getRootFontSize($type-base-font-size);
+    font-size: getSize(trimUnit($type-base-font-size) / trimUnit($functions-browser-px-font-size) * 1rem);
     line-height: $type-base-line-height;
 }
 
@@ -180,4 +185,17 @@ em {
 
 code, samp, kbd {
     font-family: $type-code-font-family;
+}
+
+var {
+    font-style: $type-var-font-style;
+}
+
+mark {
+    background-color: $type-mark-background-color;
+}
+
+q {
+    color: $type-q-color;
+    font-family: $type-q-font-family;
 }

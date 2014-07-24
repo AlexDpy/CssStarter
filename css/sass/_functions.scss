@@ -1,20 +1,16 @@
-$functions-base-px-font-size: 20px !default;
-
-$functions-base-unit: 'rem';
-
 $functions-browser-px-font-size: 16px;
+
+$functions-base-px-font-size: 16px !default;
+
+$functions-base-unit: 'rem' !default;
 
 @function trimUnit($value)
 {
     @return $value / ($value * 0 + 1);
 }
 
-@function pxToRem($value)
+@function getSize($value, $unit: $functions-base-unit)
 {
-    @return trimUnit($value) / trimUnit($functions-browser-px-font-size) * 1rem;
-}
-
-@function getSize($value, $unit: $functions-base-unit) {
     @if $unit == 'rem' {
         @if unit($value) == 'rem' {
             @return $value;
@@ -35,11 +31,3 @@ $functions-browser-px-font-size: 16px;
 
     @return $value;
 }
-
-//@function getPxFromRem($remValue) {
-//    @if unit($remValue) != 'rem' {
-//        @warn 'Wrong unit for $remValue in function "getPxToRem($remValue)" : "rem" expected';
-//        @return $remValue;
-//    }
-//    @return trimUnit($remValue) * $functions-browser-px-font-size;
-//}
