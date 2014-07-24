@@ -137,12 +137,6 @@ html, body {
     line-height: $type-base-line-height;
 }
 
-p {
-
-    margin-top: getSize($type-p-margin-top);
-    margin-bottom: getSize($type-p-margin-bottom);
-}
-
 @for $i from 1 through 6 {
     h#{$i} {
         color: nth($type-headings-color, $i);
@@ -152,6 +146,14 @@ p {
         font-weight: nth($type-headings-font-weight, $i);
         font-style: nth($type-headings-font-style, $i);
     }
+}
+
+p {
+    color: $type-p-color;
+    font-family: $type-p-font-family;
+    font-size: getSize($type-p-font-size);
+    margin-top: getSize($type-p-margin-top);
+    margin-bottom: getSize($type-p-margin-bottom);
 }
 
 a {
